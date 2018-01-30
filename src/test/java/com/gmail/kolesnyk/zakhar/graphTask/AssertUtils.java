@@ -1,6 +1,6 @@
 package com.gmail.kolesnyk.zakhar.graphTask;
 
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.GraphDto;
+import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ public class AssertUtils {
     private AssertUtils() {
     }
 
-    public static void assertGraphDtoEquals(GraphDto expected, GraphDto actual) {
+    public static void assertVertexDtoEquals(VertexDto expected, VertexDto actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getParentId(), actual.getParentId());
         if (!assertAndIsBothNull(expected.getChildrenIds(), actual.getChildrenIds())) {

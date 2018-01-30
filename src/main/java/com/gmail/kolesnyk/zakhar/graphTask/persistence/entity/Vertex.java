@@ -1,6 +1,6 @@
 package com.gmail.kolesnyk.zakhar.graphTask.persistence.entity;
 
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.GraphDto;
+import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "graphs")
-public class Graph {
+@Table(name = "vertices")
+public class Vertex {
 
     @Id
     @Column(name = "id")
@@ -23,17 +23,17 @@ public class Graph {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    private Graph parent;
+    private Vertex parent;
 
     @OneToMany
     @JoinColumn(name = "parent_id")
-    private List<Graph> children;
+    private List<Vertex> children;
 
-    public GraphDto dto() {
-        return GraphDto.builder()
+    public VertexDto dto() {
+        return VertexDto.builder()
                 .id(id)
                 .parentId(Objects.nonNull(parent) ? parent.getId() : null)
-                .childrenIds(Objects.nonNull(children) ? children.stream().map(Graph::getId).collect(Collectors.toList()) : null)
+                .childrenIds(Objects.nonNull(children) ? children.stream().map(Vertex::getId).collect(Collectors.toList()) : null)
                 .build();
     }
 }

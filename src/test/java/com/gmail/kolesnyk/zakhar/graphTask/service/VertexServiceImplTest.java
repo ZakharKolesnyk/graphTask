@@ -1,8 +1,8 @@
 package com.gmail.kolesnyk.zakhar.graphTask.service;
 
-import com.gmail.kolesnyk.zakhar.graphTask.persistence.entity.Graph;
-import com.gmail.kolesnyk.zakhar.graphTask.persistence.repository.GraphRepository;
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.GraphDto;
+import com.gmail.kolesnyk.zakhar.graphTask.persistence.entity.Vertex;
+import com.gmail.kolesnyk.zakhar.graphTask.persistence.repository.VertexRepository;
+import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
 import com.gmail.kolesnyk.zakhar.graphTask.service.exception.DataRequestException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,20 +17,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import static com.gmail.kolesnyk.zakhar.graphTask.AssertUtils.assertGraphDtoEquals;
+import static com.gmail.kolesnyk.zakhar.graphTask.AssertUtils.assertVertexDtoEquals;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Rollback
 @Transactional
-public class GraphServiceImplTest {
+public class VertexServiceImplTest {
 
     @Autowired
-    private GraphService service;
+    private VertexService service;
 
     @Autowired
-    private GraphRepository repository;
+    private VertexRepository repository;
 
     @Test
     @Sql(scripts = "/ddl.sql")
@@ -40,10 +40,10 @@ public class GraphServiceImplTest {
         assertTrue(repository.exists(id));
 
         //when
-        GraphDto dto = service.getOrCreateDto(id);
+        VertexDto dto = service.getOrCreateDto(id);
 
         //then
-        assertGraphDtoEquals(repository.findOne(id).dto(), dto);
+        assertVertexDtoEquals(repository.findOne(id).dto(), dto);
     }
 
     @Test
@@ -54,10 +54,10 @@ public class GraphServiceImplTest {
         assertTrue(repository.exists(id));
 
         //when
-        GraphDto dto = service.getOrCreateDto(id);
+        VertexDto dto = service.getOrCreateDto(id);
 
         //then
-        assertGraphDtoEquals(repository.findOne(id).dto(), dto);
+        assertVertexDtoEquals(repository.findOne(id).dto(), dto);
     }
 
     @Test
@@ -68,10 +68,10 @@ public class GraphServiceImplTest {
         assertTrue(repository.exists(id));
 
         //when
-        GraphDto dto = service.getOrCreateDto(id);
+        VertexDto dto = service.getOrCreateDto(id);
 
         //then
-        assertGraphDtoEquals(repository.findOne(id).dto(), dto);
+        assertVertexDtoEquals(repository.findOne(id).dto(), dto);
     }
 
     @Test
@@ -82,10 +82,10 @@ public class GraphServiceImplTest {
         assertFalse(repository.exists(id));
 
         //when
-        GraphDto dto = service.getOrCreateDto(id);
+        VertexDto dto = service.getOrCreateDto(id);
 
         //then
-        assertGraphDtoEquals(GraphDto.builder().id(10L).build(), dto);
+        assertVertexDtoEquals(VertexDto.builder().id(10L).build(), dto);
     }
 
     @Test
@@ -95,10 +95,10 @@ public class GraphServiceImplTest {
         assertFalse(repository.exists(id));
 
         //when
-        GraphDto dto = service.getOrCreateDto(id);
+        VertexDto dto = service.getOrCreateDto(id);
 
         //then
-        assertGraphDtoEquals(repository.findOne(id).dto(), dto);
+        assertVertexDtoEquals(repository.findOne(id).dto(), dto);
     }
 
     @Test
@@ -109,10 +109,10 @@ public class GraphServiceImplTest {
         assertTrue(repository.exists(id));
 
         //when
-        GraphDto dto = service.getOrCreateDto(id);
+        VertexDto dto = service.getOrCreateDto(id);
 
         //then
-        assertGraphDtoEquals(repository.findOne(id).dto(), dto);
+        assertVertexDtoEquals(repository.findOne(id).dto(), dto);
     }
 
     @Test
@@ -123,7 +123,7 @@ public class GraphServiceImplTest {
         assertTrue(repository.exists(id));
 
         //when
-        GraphDto dto = service.deleteAndReturnDto(id);
+        VertexDto dto = service.deleteAndReturnDto(id);
 
         //then
         assertFalse(repository.exists(dto.getId()));
@@ -151,15 +151,15 @@ public class GraphServiceImplTest {
         long id = 6L;
         Long newParentId = 5L;
         assertTrue(repository.exists(newParentId));
-        GraphDto storedGraph = repository.findOne(id).dto();
-        assertNotEquals(storedGraph.getParentId(), newParentId);
-        storedGraph.setParentId(newParentId);
+        VertexDto storedVertex = repository.findOne(id).dto();
+        assertNotEquals(storedVertex.getParentId(), newParentId);
+        storedVertex.setParentId(newParentId);
 
         //when
-        GraphDto dto = service.updateAndReturnDto(storedGraph);
+        VertexDto dto = service.updateAndReturnDto(storedVertex);
 
         //then
-        assertGraphDtoEquals(storedGraph, dto);
+        assertVertexDtoEquals(storedVertex, dto);
     }
 
     @Test
@@ -167,22 +167,22 @@ public class GraphServiceImplTest {
         //given
         long id = 6L;
         assertEquals(repository.count(), 0);
-        // +1 graph
-        Graph graph = Graph.builder()
+        // +1 vertex
+        Vertex vertex = Vertex.builder()
                 .id(id)
                 // +1 parent
-                .parent(Graph.builder().id(1L).build())
+                .parent(Vertex.builder().id(1L).build())
                 // +3 child
-                .children(LongStream.range(2, 5).mapToObj(i -> Graph.builder().id(i).build()).collect(Collectors.toList()))
+                .children(LongStream.range(2, 5).mapToObj(i -> Vertex.builder().id(i).build()).collect(Collectors.toList()))
                 .build();
 
 
         //when
-        GraphDto dto = service.updateAndReturnDto(graph.dto());
+        VertexDto dto = service.updateAndReturnDto(vertex.dto());
 
         //then
-        assertGraphDtoEquals(graph.dto(), dto);
-        // 5 graph should be created
+        assertVertexDtoEquals(vertex.dto(), dto);
+        // 5 vertex should be created
         assertEquals(repository.count(), 5);
     }
 
@@ -192,16 +192,16 @@ public class GraphServiceImplTest {
         //given
         long id = 8L;
         long initialAmount = repository.count();
-        Graph graph = repository.findOne(id);
-        graph.setChildren(LongStream.range(10, 15).mapToObj(i -> Graph.builder().id(i).build()).collect(Collectors.toList()));
+        Vertex vertex = repository.findOne(id);
+        vertex.setChildren(LongStream.range(10, 15).mapToObj(i -> Vertex.builder().id(i).build()).collect(Collectors.toList()));
         // + 5 children
 
 
         //when
-        GraphDto dto = service.updateAndReturnDto(graph.dto());
+        VertexDto dto = service.updateAndReturnDto(vertex.dto());
 
         //then
-        assertGraphDtoEquals(graph.dto(), dto);
+        assertVertexDtoEquals(vertex.dto(), dto);
         assertEquals(repository.count() - initialAmount, 5);
     }
 
@@ -212,16 +212,16 @@ public class GraphServiceImplTest {
         long id = 8L;
         long parentId = 10L;
         long initialAmount = repository.count();
-        Graph graph = repository.findOne(id);
-        graph.setParent(Graph.builder().id(parentId).build());
+        Vertex vertex = repository.findOne(id);
+        vertex.setParent(Vertex.builder().id(parentId).build());
         // + 1 parent
 
 
         //when
-        GraphDto dto = service.updateAndReturnDto(graph.dto());
+        VertexDto dto = service.updateAndReturnDto(vertex.dto());
 
         //then
-        assertGraphDtoEquals(graph.dto(), dto);
+        assertVertexDtoEquals(vertex.dto(), dto);
         assertEquals(repository.count() - initialAmount, 1);
     }
 
@@ -232,11 +232,11 @@ public class GraphServiceImplTest {
         long id = 8L;
 
         //when
-        List<GraphDto> parents = service.getAllParentsByIdDto(id);
+        List<VertexDto> parents = service.getAllParentsByIdDto(id);
 
         //then
         int count = 0; //count matched
-        for (GraphDto parent : parents) {
+        for (VertexDto parent : parents) {
             if (parent.getId().equals(6L) ||
                     parent.getId().equals(2L) ||
                     parent.getId().equals(3L)) {
@@ -254,7 +254,7 @@ public class GraphServiceImplTest {
         long id = 3L;
 
         //when
-        List<GraphDto> parents = service.getAllParentsByIdDto(id);
+        List<VertexDto> parents = service.getAllParentsByIdDto(id);
 
         //then
         int count = 0; //count matched
@@ -263,7 +263,7 @@ public class GraphServiceImplTest {
     }
 
     @Test(expected = DataRequestException.class)
-    public void getAllParentsByIdDtoIfGraphNotExistTest() {
+    public void getAllParentsByIdDtoIfVertexNotExistTest() {
         //given
         long id = 1L;
 
@@ -281,11 +281,11 @@ public class GraphServiceImplTest {
         long id = 4L;
 
         //when
-        List<GraphDto> children = service.getAllChildrenByIdDto(id);
+        List<VertexDto> children = service.getAllChildrenByIdDto(id);
 
         //then
         int count = 0; //count matched
-        for (GraphDto child : children) {
+        for (VertexDto child : children) {
             if (child.getId().equals(5L) ||
                     child.getId().equals(7L)) {
                 count++;
@@ -301,7 +301,7 @@ public class GraphServiceImplTest {
         long id = 7L;
 
         //when
-        List<GraphDto> children = service.getAllChildrenByIdDto(id);
+        List<VertexDto> children = service.getAllChildrenByIdDto(id);
 
         //then
         int count = 0; //count matched
@@ -309,7 +309,7 @@ public class GraphServiceImplTest {
     }
 
     @Test(expected = DataRequestException.class)
-    public void getAllChildrenByIdDtoIfGraphNotExistsTest() {
+    public void getAllChildrenByIdDtoIfVertexNotExistsTest() {
         //given
         long id = 1L;
 

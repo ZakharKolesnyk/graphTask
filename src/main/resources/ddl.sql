@@ -1,10 +1,10 @@
-create table graphs
+create table vertices
 (
 	id bigint not null
-		constraint graphs_pkey
+		constraint vertices_pkey
 			primary key,
 	parent_id bigint
 		constraint fkcju1dqx5pygqly6eko835ktcs
-			references graphs
+			references vertices
 )
 ;

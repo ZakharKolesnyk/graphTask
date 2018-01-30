@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GraphDto {
+public class VertexDto {
 
     @NonNull
     private Long id;
