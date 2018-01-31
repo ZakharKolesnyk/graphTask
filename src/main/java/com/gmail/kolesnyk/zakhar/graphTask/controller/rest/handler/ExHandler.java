@@ -1,4 +1,4 @@
-package com.gmail.kolesnyk.zakhar.graphTask.controller.handler;
+package com.gmail.kolesnyk.zakhar.graphTask.controller.rest.handler;
 
 import com.gmail.kolesnyk.zakhar.graphTask.service.exception.DataRequestException;
 import lombok.extern.slf4j.Slf4j;

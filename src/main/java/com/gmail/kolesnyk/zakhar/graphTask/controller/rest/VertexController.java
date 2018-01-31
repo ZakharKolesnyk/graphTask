@@ -1,7 +1,7 @@
-package com.gmail.kolesnyk.zakhar.graphTask.controller;
+package com.gmail.kolesnyk.zakhar.graphTask.controller.rest;
 
-import com.gmail.kolesnyk.zakhar.graphTask.service.VertexService;
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
+import com.gmail.kolesnyk.zakhar.graphTask.persistence.dto.VertexDto;
+import com.gmail.kolesnyk.zakhar.graphTask.service.vertex.VertexService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.gmail.kolesnyk.zakhar.graphTask.persistence.entity;
 
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
+import com.gmail.kolesnyk.zakhar.graphTask.persistence.dto.VertexDto;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,8 +1,8 @@
-package com.gmail.kolesnyk.zakhar.graphTask.service;
+package com.gmail.kolesnyk.zakhar.graphTask.service.vertex;
 
+import com.gmail.kolesnyk.zakhar.graphTask.persistence.dto.VertexDto;
 import com.gmail.kolesnyk.zakhar.graphTask.persistence.entity.Vertex;
 import com.gmail.kolesnyk.zakhar.graphTask.persistence.repository.VertexRepository;
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
 import com.gmail.kolesnyk.zakhar.graphTask.service.exception.DataRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

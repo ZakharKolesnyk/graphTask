@@ -1,4 +1,4 @@
-package com.gmail.kolesnyk.zakhar.graphTask.service.dto;
+package com.gmail.kolesnyk.zakhar.graphTask.persistence.dto;
 
 import lombok.*;
 

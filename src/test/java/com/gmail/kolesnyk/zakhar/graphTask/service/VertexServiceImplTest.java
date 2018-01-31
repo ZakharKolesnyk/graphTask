@@ -1,9 +1,10 @@
 package com.gmail.kolesnyk.zakhar.graphTask.service;
 
+import com.gmail.kolesnyk.zakhar.graphTask.persistence.dto.VertexDto;
 import com.gmail.kolesnyk.zakhar.graphTask.persistence.entity.Vertex;
 import com.gmail.kolesnyk.zakhar.graphTask.persistence.repository.VertexRepository;
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
 import com.gmail.kolesnyk.zakhar.graphTask.service.exception.DataRequestException;
+import com.gmail.kolesnyk.zakhar.graphTask.service.vertex.VertexService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

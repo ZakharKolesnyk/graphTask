@@ -1,6 +1,6 @@
 package com.gmail.kolesnyk.zakhar.graphTask;
 
-import com.gmail.kolesnyk.zakhar.graphTask.service.dto.VertexDto;
+import com.gmail.kolesnyk.zakhar.graphTask.persistence.dto.VertexDto;
 
 import java.util.Objects;
 
